@@ -118,7 +118,7 @@ router.post('/operate', async (ctx) => {
       return;
     }
     try {
-      const res = await Counter.findOneAndUpdate({ _id: 'userId' }, { $inc: { sequence_value: 1 } }, { new: true })
+      const res = await User.findOneAndUpdate({ userId }, { mobile, job, state, roleList, deptId })
       ctx.body = util.success({}, '更新成功');
     } catch (error) {
       ctx.body = util.fail(err.stack, '更新失败');
