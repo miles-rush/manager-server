@@ -8,6 +8,7 @@ const logger = require('koa-logger')
 const log4js = require('./utils/log4j')
 const users = require('./routes/users')
 const menus = require('./routes/menus')
+const roles = require('./routes/roles')
 const { JsonWebTokenError } = require('jsonwebtoken')
 const router = require('koa-router')()
 const jwt = require('jsonwebtoken')
@@ -55,6 +56,7 @@ router.prefix("/api")
 
 router.use(users.routes(), users.allowedMethods())
 router.use(menus.routes(), menus.allowedMethods())
+router.use(roles.routes(), roles.allowedMethods())
 
 app.use(router.routes(), router.allowedMethods())
 
