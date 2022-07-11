@@ -14,7 +14,6 @@ const roleSchema = mongoose.Schema({
         type: Date,
         default: Date.now()
     },//更新时间
-    remark: String
 })
 // role 会自动去映射数据库中的 roles
 module.exports = mongoose.model("role", roleSchema)
