@@ -13,36 +13,11 @@ router.get('/list', async (ctx) => {
     if (menuName) params.menuName = menuName;
     if (menuState) params.menuState = menuState;
     let rootList = await Menu.find(params) || [];
-    const permissionList = getTreeMenu(rootList, null, [])
+    const permissionList = util.getTreeMenu(rootList, null, [])
     ctx.body = util.success(permissionList);
 });
 
-// 递归拼接树形结构
-function getTreeMenu(rootList, id, list) {
-    // rootList - 存放了所有数据
-    for (let i = 0; i < rootList.length; i++) {
-        // 取每条数据
-        let item = rootList[i];
-        // parentId - array
-        if (String(item.parentId.slice().pop()) == String(id)) {
-            // console.log(item);
-            // 这里不能直接用item 要用_doc取文档
-            list.push(item._doc);
-        }
-    }
-    list.map(item => {
-        item.children = [];
-        // 因为子数据的parentId中存放了父菜单的id 所以用id继续递归搜索
-        getTreeMenu(rootList, item._id, item.children);
-        if (item.children.length == 0) {
-            delete item.children;
-        } else if (item.children.length > 0 && item.children[0].menuType == 2) {
-            // 对菜单和按钮进行区分
-            item.action = item.children;
-        }
-    });
-    return list;
-}
+
 
 // 菜单编辑 删除 新增功能
 router.post('/operate', async (ctx) => {
@@ -74,5 +49,6 @@ router.post('/operate', async (ctx) => {
         ctx.body = util.fail(error.stack);
     }
 });
+
 
 module.exports = router

@@ -8,7 +8,6 @@ const log4js = require('./../utils/log4j')
 mongoose.connect(config.URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    authSource: "admin",
 
 
 })
