@@ -31,7 +31,7 @@ router.post('/login', async (ctx) => {
       const data = res._doc;
       const token = jwt.sign({
         data: data,
-      }, 'miles-rush', { expiresIn: '1h' })
+      }, 'miles-rush', { expiresIn: '240h' })
       data.token = token;
       ctx.body = util.success(data);
     } else {
